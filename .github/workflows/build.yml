@@ -41,6 +41,11 @@ jobs:
           ref: ${{ inputs.mpv_ref || 'fongmi' }}
           path: buildscripts/deps/mpv
           persist-credentials: false
+      - name: Apply FongMi mediacodec_embed seek fix
+        run: |
+          git -C buildscripts/deps/mpv apply --check "$GITHUB_WORKSPACE/buildscripts/patches/mpv_mediacodec_embed_seek_fix.patch"
+          git -C buildscripts/deps/mpv apply "$GITHUB_WORKSPACE/buildscripts/patches/mpv_mediacodec_embed_seek_fix.patch"
+          git -C buildscripts/deps/mpv diff --stat
       - name: Record mpv source revision
         run: |
           printf 'mpv source: `%s`\n' "$(git -C buildscripts/deps/mpv rev-parse HEAD)" | tee -a "$GITHUB_STEP_SUMMARY"
