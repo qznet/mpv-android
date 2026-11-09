@@ -25,7 +25,7 @@ env:
   LIBPLACEBO_GIT_COMMIT: ${{ inputs.libplacebo_commit || '' }}
   MPV_GIT_URL: https://github.com/FongMi/mpv.git
   MPV_GIT_REF: fongmi
-  MPV_ANDROID_ARCHES: armv7l arm64
+  MPV_ANDROID_ARCHES: armv7l
 
 jobs:
   linux:
