@@ -1,0 +1,17 @@
+--- a/video/out/vo_mediacodec_embed.c
++++ b/video/out/vo_mediacodec_embed.c
+@@ -133,11 +133,12 @@
+             (AVMediaCodecBuffer *)p->next_image->planes[3];
+         int w = 0, h = 0;
+         if (vo_android_surface_size(vo, &w, &h))
+             vo_android_surface_frame_drawn(vo, w, h);
+-        if (av_mediacodec_release_buffer(buffer, 1) < 0) {
++        int release_status = av_mediacodec_release_buffer_status(buffer, 1);
++        if (release_status < 0) {
+             report_backend_error(vo, "video surface");
+-        } else {
++        } else if (release_status > 0) {
+             p->submitted_video = true;
+             // Codec source dimensions do not describe the output Surface.
+             vo_android_surface_frame_presented(vo, w, h);
+         }
